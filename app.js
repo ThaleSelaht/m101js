@@ -1,10 +1,28 @@
-var http = require('http');
+var app         = require('express')(),
+    engines     = require('consolidate'),    
+    MongoClient = require('mongodb').MongoClient,
+    assert      = require('assert');
 
-var server = http.createServer(function(req, res) {
-    res.writeHead(200, {"Content-Type": "text/plain"});
-    res.end("Hello World!\n");
+app.engine('html', engines.nunjucks);
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');    
+
+MongoClient.connect('mongodb://localhost:27017/video', function(err, db) {
+    assert.equal(null, err);
+    console.log('Sucessfully connected to server');
+    
+    app.get('/', function(req, res) {
+        db.collection('movies').find({}).toArray(function(err, docs) {
+            res.render('movies', {'movies': docs});
+        });    
+    });
+    
+    app.use(function(req, res) {
+        res.sendStatus(404);
+    });
+
+    var server = app.listen(3000, function() {
+        var port = server.address().port;
+        console.log('Express server listening on port %s', port);       
+    });
 });
-
-server.listen(8000);
-
-console.log('Server running at http://localhost:8000');
