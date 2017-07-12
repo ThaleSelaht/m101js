@@ -9,7 +9,7 @@ MongoClient.connect('mongodb://localhost:27017/crunchbase', function(err, db) {
     console.log("Successfully connected to MongoDB.");
 
     var query = {"category_code": "biotech"};
-    var projection = {"name": 1, "category_code": 1, "_id": 0};
+    var projection = {"name": 1, "number_of_employees": 1, "_id": 0};
 
     var cursor = db.collection('companies').find(query);
     cursor.project(projection);
