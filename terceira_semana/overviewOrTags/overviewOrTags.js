@@ -112,7 +112,9 @@ function queryDocument(options) {
 
     if ("overview" in options) {
         query = {
-            "$or": [ { "overview": { "$regex": options.overview, "$options": "i" } }, { "tag_list": { "$regex": options.overview, "$options": "i" }}]
+            "$or": [ 
+                { "overview": { "$regex": options.overview, "$options": "i" } },
+                { "tag_list": { "$regex": options.overview, "$options": "i" }} ]
         }
         /*
            TODO: Write an assignment statement to ensure that if "overview" appears in the 
