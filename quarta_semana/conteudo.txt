@@ -9,3 +9,5 @@
 - Multikeys
 - Benefits of Embedding
 - Trees
+- When to Denormalize
+Homeworks Completed!
